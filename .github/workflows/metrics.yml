@@ -63,8 +63,39 @@ jobs:
           plugin_wakatime: true
           output_file: metrics-wakatime.svg
 
-      - name: Commit and push SVGs
+            # Commit each SVG immediately after generation
+
+      # —— Commit calendar SVG ——
+      - name: Commit calendar SVG
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update metrics SVGs"
-          file_pattern: "metrics-*.svg"
+          commit_message: "chore: update metrics-calendar.svg"
+          file_pattern: "metrics-calendar.svg"
+
+      # —— Commit starred topics SVG ——
+      - name: Commit starred topics SVG
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics-starred-topics.svg"
+          file_pattern: "metrics-starred-topics.svg"
+
+      # —— Commit languages-starred SVG ——
+      - name: Commit languages from starred SVG
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics-languages-starred.svg"
+          file_pattern: "metrics-languages-starred.svg"
+
+      # —— Commit traffic SVG ——
+      - name: Commit traffic SVG
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics-traffic.svg"
+          file_pattern: "metrics-traffic.svg"
+
+      # —— Commit WakaTime SVG ——
+      - name: Commit WakaTime SVG
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics-wakatime.svg"
+          file_pattern: "metrics-wakatime.svg"
