@@ -1,0 +1,33 @@
+name: Generate Metrics
+
+on:
+  schedule:
+    - cron: '0 0 * * *'      # ogni giorno a mezzanotte UTC
+  workflow_dispatch:         # permette di far partire manualmente
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Generate metrics report
+        uses: lowlighter/metrics@v1
+        with:
+          plugins: |
+            languages
+            stats
+          languages_include_orgs: true
+          languages_include_forks: true
+          output_file: METRICS.md
+
+      - name: Commit and push report
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore: update metrics report"
+          file_pattern: METRICS.md
