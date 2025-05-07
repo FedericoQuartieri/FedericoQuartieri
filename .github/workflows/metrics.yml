@@ -2,28 +2,29 @@ name: Generate Metrics
 
 on:
   schedule:
-    - cron: '0 0 * * *'      # ogni giorno a mezzanotte UTC
-  workflow_dispatch:         # permette di far partire manualmente
+    # every day at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   metrics:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: true
 
       - name: Generate metrics report
-        uses: lowlighter/metrics@v1
+        uses: lowlighter/metrics@v3.34  # or @latest
         with:
           plugins: |
             languages
             stats
+          # include org and forked repos in language stats:
           languages_include_orgs: true
           languages_include_forks: true
+          # output file
           output_file: METRICS.md
 
       - name: Commit and push report
