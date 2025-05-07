@@ -2,94 +2,98 @@ name: Generate Individual Metrics
 
 on:
   schedule:
-    - cron: "0 0 * * *"         # ogni giorno a mezzanotte UTC
-  workflow_dispatch:            # esecuzione manuale
+    - cron: "0 0 * * *"      # ogni giorno, mezzanotte UTC
+  workflow_dispatch:         # avvio manuale
 
 permissions:
-  contents: write               # per fare push degli SVG
+  contents: write            # necessario per il push degli SVG
+
+# ► esportiamo i secret come env, così sono visibili ovunque
+env:
+  METRICS_TOKEN:  ${{ secrets.METRICS_TOKEN }}
+  WAKATIME_TOKEN: ${{ secrets.WAKATIME_TOKEN }}  # può essere vuoto
 
 jobs:
   metrics:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      ##################################################
+      # 1. Isometric commit calendar
+      ##################################################
+      - name: Commit calendar
+        uses: lowlighter/metrics@v3.34
+        with:
+          token:      ${{ env.METRICS_TOKEN }}
+          user:       FedericoQuartieri
+          base:       ""                         # niente header/attività
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          filename:   metrics-calendar.svg
 
-    #########################################################
-    # 1. Isometric commit calendar
-    #########################################################
-    - name: Commit calendar
-      uses: lowlighter/metrics@v3.34
-      with:
-        token: ${{ secrets.METRICS_TOKEN }}
-        user: FedericoQuartieri
-        base: ""                       # ← disabilita header/attività standard
-        plugin_isocalendar: yes
-        plugin_isocalendar_duration: full-year
-        filename: metrics-calendar.svg # file di output
+      ##################################################
+      # 2. Starred topics
+      ##################################################
+      - name: Starred topics
+        uses: lowlighter/metrics@v3.34
+        with:
+          token:              ${{ env.METRICS_TOKEN }}
+          user:               FedericoQuartieri
+          base:               ""
+          plugin_topics:      yes
+          plugin_topics_mode: starred            # solo repo che hai “starred”
+          filename:           metrics-starred-topics.svg
 
-    #########################################################
-    # 2. Starred topics
-    #########################################################
-    - name: Starred topics
-      uses: lowlighter/metrics@v3.34
-      with:
-        token: ${{ secrets.METRICS_TOKEN }}
-        user: FedericoQuartieri
-        base: ""
-        plugin_topics: yes
-        plugin_topics_mode: starred    # usa i repo che hai “starred”
-        filename: metrics-starred-topics.svg
+      ##################################################
+      # 3. Languages from star lists
+      ##################################################
+      - name: Languages of starred repos
+        uses: lowlighter/metrics@v3.34
+        with:
+          token:                    ${{ env.METRICS_TOKEN }}
+          user:                     FedericoQuartieri
+          base:                     ""
+          plugin_starlists:         yes
+          plugin_starlists_languages: yes
+          plugin_starlists_limit:   300          # quante repo analizzare
+          filename:                 metrics-languages-starred.svg
 
-    #########################################################
-    # 3. Languages from star lists
-    #########################################################
-    - name: Languages of starred repos
-      uses: lowlighter/metrics@v3.34
-      with:
-        token: ${{ secrets.METRICS_TOKEN }}
-        user: FedericoQuartieri
-        base: ""
-        plugin_starlists: yes
-        plugin_starlists_languages: yes
-        plugin_starlists_limit: 300    # quante repo starred ispezionare
-        filename: metrics-languages-starred.svg
+      ##################################################
+      # 4. Repository traffic
+      ##################################################
+      - name: Repository traffic
+        uses: lowlighter/metrics@v3.34
+        with:
+          token:      ${{ env.METRICS_TOKEN }}
+          user:       FedericoQuartieri
+          base:       ""
+          plugin_traffic: yes
+          filename:   metrics-traffic.svg
 
-    #########################################################
-    # 4. Repository traffic
-    #########################################################
-    - name: Repo traffic
-      uses: lowlighter/metrics@v3.34
-      with:
-        token: ${{ secrets.METRICS_TOKEN }}
-        user: FedericoQuartieri
-        base: ""
-        plugin_traffic: yes
-        filename: metrics-traffic.svg
+      ##################################################
+      # 5. WakaTime (solo se hai la API‑key)
+      ##################################################
+      - name: WakaTime activity
+        if: ${{ env.WAKATIME_TOKEN != '' }}      # esegui solo se esiste
+        uses: lowlighter/metrics@v3.34
+        with:
+          token:                  ${{ env.METRICS_TOKEN }}
+          user:                   FedericoQuartieri
+          base:                   ""
+          plugin_wakatime:        yes
+          plugin_wakatime_token:  ${{ env.WAKATIME_TOKEN }}
+          plugin_wakatime_days:   30
+          filename:               metrics-wakatime.svg
 
-    #########################################################
-    # 5. WakaTime coding activity  (serve api‑key)
-    #########################################################
-    - name: WakaTime activity
-      if: ${{ secrets.WAKATIME_TOKEN != '' }}   # esegui solo se il secret esiste
-      uses: lowlighter/metrics@v3.34
-      with:
-        token: ${{ secrets.METRICS_TOKEN }}
-        user: FedericoQuartieri
-        base: ""
-        plugin_wakatime: yes
-        plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}
-        plugin_wakatime_days: 30
-        filename: metrics-wakatime.svg
-
-    #########################################################
-    # Commit & push tutti gli SVG creati
-    #########################################################
-    - name: Commit and push SVGs
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "chore: update metrics SVGs"
-        file_pattern: metrics-*.svg
+      ##################################################
+      # Commit & push tutti gli SVG creati
+      ##################################################
+      - name: Commit and push SVGs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics SVGs"
+          file_pattern:    metrics-*.svg
