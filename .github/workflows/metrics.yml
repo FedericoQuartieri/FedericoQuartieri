@@ -26,11 +26,9 @@ jobs:
           plugins: |
             languages
             stats
-        # include organization and forked repos in language stats
-        # and output to METRICS.md
-        languages_include_orgs: true
-        languages_include_forks: true
-        output_file: METRICS.md
+          languages_include_orgs: true    # <— spostato sotto with
+          languages_include_forks: true   # <— spostato sotto with
+          output_file: METRICS.md
         env:
           METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
 
