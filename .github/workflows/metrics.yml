@@ -2,11 +2,12 @@ name: Generate Metrics
 
 on:
   schedule:
-    - cron: '0 0 * * *'       # ogni giorno a mezzanotte UTC
-  workflow_dispatch:         # permette l’esecuzione manuale
+    # ogni giorno a mezzanotte UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:         # per lanciarlo manualmente
 
 permissions:
-  contents: write            # necessario per fare push di METRICS.md
+  contents: write            # per fare il push di METRICS.md
 
 jobs:
   metrics:
@@ -22,14 +23,33 @@ jobs:
       - name: Generate metrics report
         uses: lowlighter/metrics@v3.34
         with:
-          token: ${{ secrets.METRICS_TOKEN }}        # ← qui il tuo PAT
-          user: FedericoQuartieri                    # ← il tuo username GitHub
-          plugin_languages: true                     # abilita “Top Languages”
-          plugin_stats: true                         # abilita “Stats generali”
-          plugin_repositories_affiliations: true     # include i repo di organizzazioni
-          plugin_repositories_forks: true            # include i fork a cui hai contribuito
+          token: ${{ secrets.METRICS_TOKEN }}        # il tuo PAT in secret
+          user: FedericoQuartieri                    # GitHub username
+
+          # —— plugin core ——
+          plugin_languages: true                     # Top Languages SVG
+          plugin_stats: true                         # Stats generali (repo, stars, issues…)
+          plugin_commits: true                       # Commits nel tempo
+          plugin_contributors: true                  # Contributors list
+          plugin_repositories_affiliations: true     # Include org repos
+          plugin_repositories_forks: true            # Include forked repos
+
+          # —— plugin “social” ——
+          plugin_stargazers: true                    # Stargazers count
+          plugin_stargazers_worldmap: true           # Mappa mondiale degli stargazers
+          plugin_topics: true                        # Word-cloud dei topics
+          plugin_reactions: true                     # Reactions summary
+          plugin_discussions: true                   # Discussions stats
+          plugin_followup: true                      # Follow-up interactions
+
+          # —— plugin “code” ——
+          plugin_lines: true                         # Linee di codice storiche
+          plugin_habits: true                        # Grafici di coding habits
+          plugin_stargazers_charts: true             # Chart storica degli stargazers
+          plugin_stargazers_worldmap: true           # Mappa stargazers
+
           output_file: METRICS.md                    # file di output
-          
+
       - name: Commit and push report
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
