@@ -2,13 +2,16 @@ name: Generate Metrics
 
 on:
   schedule:
-    # every day at midnight UTC
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'   # every day at midnight UTC
   workflow_dispatch:
+
+permissions:
+  contents: write        # ← allow pushing changes
 
 jobs:
   metrics:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,19 +19,15 @@ jobs:
           fetch-depth: 0
 
       - name: Generate metrics report
-        uses: lowlighter/metrics@v3.34  # or @latest
+        uses: lowlighter/metrics@v3.34
         with:
           plugins: |
             languages
             stats
-          # include org and forked repos in language stats:
           languages_include_orgs: true
           languages_include_forks: true
-          # output file
           output_file: METRICS.md
 
       - name: Commit and push report
-        uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: "chore: update metrics report"
-          file_pattern: METRICS.md
+        uses: stefanzweifel/git-auto-commit-action@v5   # ← updated version
+        # no additional with: needed, defaults will commit all changed files
