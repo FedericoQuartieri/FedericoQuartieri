@@ -2,12 +2,11 @@ name: Generate Metrics
 
 on:
   schedule:
-    # every day at midnight UTC
-    - cron: '0 0 * * *'
-  workflow_dispatch:    # allows manual runs
+    - cron: '0 0 * * *'       # ogni giorno a mezzanotte UTC
+  workflow_dispatch:         # permette l’esecuzione manuale
 
 permissions:
-  contents: write      # needed to push METRICS.md back to the repo
+  contents: write            # necessario per fare push di METRICS.md
 
 jobs:
   metrics:
@@ -23,15 +22,14 @@ jobs:
       - name: Generate metrics report
         uses: lowlighter/metrics@v3.34
         with:
-          plugins: |
-            languages
-            stats
-          languages_include_orgs: true    # <— spostato sotto with
-          languages_include_forks: true   # <— spostato sotto with
-          output_file: METRICS.md
-        env:
-          METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
-
+          token: ${{ secrets.METRICS_TOKEN }}        # ← qui il tuo PAT
+          user: FedericoQuartieri                    # ← il tuo username GitHub
+          plugin_languages: true                     # abilita “Top Languages”
+          plugin_stats: true                         # abilita “Stats generali”
+          plugin_repositories_affiliations: true     # include i repo di organizzazioni
+          plugin_repositories_forks: true            # include i fork a cui hai contribuito
+          output_file: METRICS.md                    # file di output
+          
       - name: Commit and push report
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
