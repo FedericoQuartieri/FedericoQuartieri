@@ -2,12 +2,11 @@ name: Generate Metrics
 
 on:
   schedule:
-    # every day at midnight UTC
-    - cron: '0 0 * * *'
-  workflow_dispatch:  # allows manual runs
+    - cron: '0 0 * * *'  # daily at midnight UTC
+  workflow_dispatch:    # allows manual runs
 
 permissions:
-  contents: write    # allow pushing SVGs back to the repo
+  contents: write      # allow pushing SVGs back to the repo
 
 jobs:
   metrics:
@@ -29,25 +28,25 @@ jobs:
           output_file: metrics-calendar.svg
 
       # —— Starred Topics ——
-      - name: Generate starred topics report
+      - name: Generate starred topics
         uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: FedericoQuartieri
-          plugin_starred_topics: true
+          plugin_topics: true               # starred topics
           output_file: metrics-starred-topics.svg
 
       # —— Languages from Star Lists ——
-      - name: Generate languages from starred repos
+      - name: Generate languages from star lists
         uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: FedericoQuartieri
-          plugin_languages_starred: true
+          plugin_starlists_languages: true  # languages from starred repos
           output_file: metrics-languages-starred.svg
 
-      # —— Repositories Traffic ——
-      - name: Generate repository traffic report
+      # —— Repository Traffic ——
+      - name: Generate repository traffic
         uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.METRICS_TOKEN }}
@@ -56,7 +55,7 @@ jobs:
           output_file: metrics-traffic.svg
 
       # —— WakaTime Coding Activity ——
-      - name: Generate WakaTime activity report
+      - name: Generate WakaTime activity
         uses: lowlighter/metrics@v3.34
         with:
           token: ${{ secrets.METRICS_TOKEN }}
@@ -64,8 +63,8 @@ jobs:
           plugin_wakatime: true
           output_file: metrics-wakatime.svg
 
-      - name: Commit and push all reports
+      - name: Commit and push SVGs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update all metrics SVGs"
+          commit_message: "chore: update metrics SVGs"
           file_pattern: "metrics-*.svg"
