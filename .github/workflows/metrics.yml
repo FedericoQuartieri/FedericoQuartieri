@@ -4,15 +4,14 @@ on:
   schedule:
     # every day at midnight UTC
     - cron: '0 0 * * *'
-  workflow_dispatch:         # for manual runs
+  workflow_dispatch:  # allows manual runs
 
 permissions:
-  contents: write            # to allow pushing SVG back to the repo
+  contents: write    # allow pushing SVGs back to the repo
 
 jobs:
   metrics:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,37 +19,53 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Generate metrics report
+      # —— Isometric Commit Calendar ——
+      - name: Generate commit calendar
         uses: lowlighter/metrics@v3.34
         with:
-          token: ${{ secrets.METRICS_TOKEN }}        # your PAT secret
-          user: FedericoQuartieri                    # GitHub username
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          plugin_calendar: true
+          output_file: metrics-calendar.svg
 
-          # —— core plugins ——
-          plugin_languages: true                     # Top Languages SVG
-          plugin_stats: true                         # General stats
-          plugin_commits: true                       # Commits over time
-          plugin_contributors: true                  # Contributors list
-          plugin_repositories_affiliations: true     # Include org repos
-          plugin_repositories_forks: true            # Include forked repos
+      # —— Starred Topics ——
+      - name: Generate starred topics report
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          plugin_starred_topics: true
+          output_file: metrics-starred-topics.svg
 
-          # —— social plugins ——
-          plugin_stargazers: true                    # Stargazers count
-          plugin_stargazers_worldmap: true           # Stargazers world map
-          plugin_topics: true                        # Topics word-cloud
-          plugin_reactions: true                     # Reactions summary
-          plugin_discussions: true                   # Discussions stats
-          plugin_followup: true                      # Follow-up interactions
+      # —— Languages from Star Lists ——
+      - name: Generate languages from starred repos
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          plugin_languages_starred: true
+          output_file: metrics-languages-starred.svg
 
-          # —— code plugins ——
-          plugin_lines: true                         # Historical lines of code
-          plugin_habits: true                        # Coding habits chart
-          plugin_stargazers_charts: true             # Stargazers over time chart
+      # —— Repositories Traffic ——
+      - name: Generate repository traffic report
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          plugin_traffic: true
+          output_file: metrics-traffic.svg
 
-          output_file: profile-metrics.svg           # generate SVG directly
+      # —— WakaTime Coding Activity ——
+      - name: Generate WakaTime activity report
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          plugin_wakatime: true
+          output_file: metrics-wakatime.svg
 
-      - name: Commit and push report
+      - name: Commit and push all reports
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update profile-metrics.svg"
-          file_pattern: profile-metrics.svg
+          commit_message: "chore: update all metrics SVGs"
+          file_pattern: "metrics-*.svg"
