@@ -2,11 +2,12 @@ name: Generate Metrics
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # every day at midnight UTC
-  workflow_dispatch:
+    # every day at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:    # allows manual runs
 
 permissions:
-  contents: write        # ← allow pushing changes
+  contents: write      # needed to push METRICS.md back to the repo
 
 jobs:
   metrics:
@@ -17,6 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Generate metrics report
         uses: lowlighter/metrics@v3.34
@@ -24,10 +26,16 @@ jobs:
           plugins: |
             languages
             stats
-          languages_include_orgs: true
-          languages_include_forks: true
-          output_file: METRICS.md
+        # include organization and forked repos in language stats
+        # and output to METRICS.md
+        languages_include_orgs: true
+        languages_include_forks: true
+        output_file: METRICS.md
+        env:
+          METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
 
       - name: Commit and push report
-        uses: stefanzweifel/git-auto-commit-action@v5   # ← updated version
-        # no additional with: needed, defaults will commit all changed files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update metrics report"
+          file_pattern: METRICS.md
