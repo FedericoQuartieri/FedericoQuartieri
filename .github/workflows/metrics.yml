@@ -79,7 +79,7 @@ jobs:
           plugin_languages_details: lines, bytes-size
           plugin_languages_ignored: >-
               PostScript
-          plugin_languages_skipped: PostScript
+          plugin_languages_skipped: PostScript, Fortran, Makefile, Shell, TeX
           plugin_languages_limit: 6
           plugin_languages_analysis_timeout: 40
 
