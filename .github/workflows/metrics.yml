@@ -78,7 +78,7 @@ jobs:
           plugin_languages_indepth: yes
           plugin_languages_details: lines, bytes-size
           plugin_languages_ignored: >-
-              PostScript, Fortran, Makefile, Shell, TeX
+              PostScript, Fortran, Makefile, Shell, TeX, Rof Manpage
           plugin_languages_limit: 6
           plugin_languages_analysis_timeout: 40
 
