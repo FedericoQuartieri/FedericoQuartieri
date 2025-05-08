@@ -77,17 +77,16 @@ jobs:
       ##################################################
       # 5. WakaTime (solo se hai la API‑key)
       ##################################################
-      - name: WakaTime activity
-        if: ${{ env.WAKATIME_TOKEN != '' }}      # esegui solo se esiste
-        uses: lowlighter/metrics@v3.34
+      - name: WakaTime
+        uses: lowlighter/metrics@latest
         with:
-          token:                  ${{ env.METRICS_TOKEN }}
-          user:                   FedericoQuartieri
-          base:                   ""
-          plugin_wakatime:        yes
-          plugin_wakatime_token:  ${{ env.WAKATIME_TOKEN }}
-          plugin_wakatime_days:   30
-          filename:               metrics-wakatime.svg
+          filename: metrics.plugin.wakatime.svg
+          token: NOT_NEEDED
+          base: ""
+          plugin_wakatime: yes
+          plugin_wakatime_sections: time, projects, projects-graphs, languages, languages-graphs, editors, os
+          plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}
+
 
       ##################################################
       # Commit & push tutti gli SVG creati
