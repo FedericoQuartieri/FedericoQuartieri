@@ -44,26 +44,12 @@ Here's an overview of my most used programming languages in repositories:
 
 ![Languages](./metrics.plugin.languages.indepth.svg)
 
----
 
-### ⏳ Weekly Coding Stats (via WakaTime)
-My coding activity across different projects, tracked through WakaTime:
-
-![Wakatime](./metrics.plugin.wakatime.svg)
-
----
 
 ### 📊 My Coding Habits
 Analyzed from my recent commit history, showing activity distribution across days and hours:
 
 ![Coding Habits](./metrics.plugin.habits.charts.svg)
-
----
-
-### 🌟 Starred Topics
-Currently exploring repositories in various domains. Check out topics from my starred repositories:
-
-![Starred Topics](./metrics.plugin.topics.icons.svg)
 
 
 ### 🗓️ Contribution Calendar
