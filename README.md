@@ -57,6 +57,11 @@ Visual overview of my coding contributions this year:
 
 ![Calendar](./metrics-calendar.svg)
 
+### test
+
+![waka](./metrics.plugin.wakatime.svg)
+
+![star](./metrics.plugin.topics.icons.svg)
 
 ---
 
