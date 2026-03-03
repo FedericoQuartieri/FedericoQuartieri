@@ -49,7 +49,7 @@ Here's an overview of my most used programming languages in repositories:
 ### 📊 My Coding Habits
 Analyzed from my recent commit history, showing activity distribution across days and hours:
 
-#![Coding Habits](./metrics.plugin.habits.charts.svg)
+<!-- ![Coding Habits](./metrics.plugin.habits.charts.svg) -->
 
 ![waka](./metrics.plugin.wakatime.svg)
 
