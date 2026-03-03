@@ -63,6 +63,8 @@ Visual overview of my coding contributions this year:
 
 ![star](./metrics.plugin.topics.icons.svg)
 
+![boh](./metrics.plugin.languages.indepth.svg
+
 ---
 
 ## 📫 Let's Connect!
