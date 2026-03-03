@@ -97,7 +97,35 @@ jobs:
           plugin_habits_facts: no
           plugin_habits_charts: yes
           config_timezone: Europe/Paris
-        
+
+
+
+
+      - name: Indepth analysis
+        uses: gh-metrics/metrics@master
+        with:
+          filename: metrics.plugin.languages.indepth.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_details: lines, bytes-size
+          plugin_languages_ignored: >-
+            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
+          plugin_languages_limit: 6
+          plugin_languages_analysis_timeout: 40
+
+      - name: Recent activity charts
+        uses: gh-metrics/metrics@master
+        with:
+          filename: metrics.plugin.habits.charts.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_habits: yes
+          plugin_habits_facts: no
+          plugin_habits_charts: yes
+          config_timezone: Europe/Paris
+            
         
 
       ##################################################
