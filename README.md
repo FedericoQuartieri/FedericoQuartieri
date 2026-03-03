@@ -49,7 +49,9 @@ Here's an overview of my most used programming languages in repositories:
 ### 📊 My Coding Habits
 Analyzed from my recent commit history, showing activity distribution across days and hours:
 
-![Coding Habits](./metrics.plugin.habits.charts.svg)
+#![Coding Habits](./metrics.plugin.habits.charts.svg)
+
+![waka](./metrics.plugin.wakatime.svg)
 
 
 ### 🗓️ Contribution Calendar
@@ -57,9 +59,7 @@ Visual overview of my coding contributions this year:
 
 ![Calendar](./metrics-calendar.svg)
 
-### test
 
-![waka](./metrics.plugin.wakatime.svg)
 
 ![star](./metrics.plugin.topics.icons.svg)
 
