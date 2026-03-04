@@ -48,7 +48,7 @@ jobs:
           plugin_topics: yes
           plugin_topics_limit: 15
           plugin_topics_mode: labels
-          filename: metrics.plugin.topics.icons.svg
+          filename: metrics.plugin.topics.svg
 
       ##################################################
       # 3. WakaTime
@@ -66,9 +66,9 @@ jobs:
           filename: metrics.plugin.wakatime.svg
 
       ##################################################
-      # 4. Languages activity
+      # 4. Languages activity (indepth)
       ##################################################
-      - name: Indepth analysis
+      - name: Languages indepth
         uses: gh-metrics/metrics@master
         with:
           output_action: none
@@ -82,6 +82,7 @@ jobs:
             PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
           plugin_languages_limit: 6
           plugin_languages_analysis_timeout: 40
+          commits_authoring: FedericoQuartieri, Federico Quartieri, federicoquartieri@users.noreply.github.com
           filename: metrics.plugin.languages.indepth.svg
 
       ##################################################
@@ -92,9 +93,6 @@ jobs:
         with:
           output_action: none
           use_prebuilt_image: no
-          plugins_errors_fatal: yes
-          debug: yes
-          debug_print: yes
           token: ${{ env.METRICS_TOKEN }}
           user: FedericoQuartieri
           base: ""
