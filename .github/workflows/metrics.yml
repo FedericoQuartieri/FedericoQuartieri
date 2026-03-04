@@ -127,6 +127,7 @@ jobs:
       - name: Recent activity charts
         uses: dkhokhlov/metrics@master
         with:
+          output_action: none
           use_prebuilt_image: no
           plugins_errors_fatal: yes
           debug: yes
@@ -137,7 +138,7 @@ jobs:
           plugin_habits: yes
           plugin_habits_facts: no
           plugin_habits_charts: yes
-          config_timezone: Europe/Paris
+          config_timezone: Europe/ParisEurope/Paris
 
       ##################################################
       # Commit & push tutti gli SVG creati
@@ -146,4 +147,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update metrics SVGs"
-          file_pattern:    metrics-*.svg
+          file_pattern: metrics*.svg
