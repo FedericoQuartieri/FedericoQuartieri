@@ -115,6 +115,8 @@ jobs:
       - name: Recent activity charts
         uses: gh-metrics/metrics@master
         with:
+          plugins_errors_fatal: yes
+          debug: yes
           filename: metrics.plugin.habits.charts.svg
           token: ${{ secrets.METRICS_TOKEN }}
           base: ""
