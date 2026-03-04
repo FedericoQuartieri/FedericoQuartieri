@@ -51,7 +51,7 @@ Analyzed from my recent commit history, showing activity distribution across day
 
 <!-- ![Coding Habits](./metrics.plugin.habits.charts.svg) -->
 
-![Coding Habits](./metrics.plugin.habits.charts.svg)
+![Coding Habits](./metrics.plugin.habits.charts.svg?v=2)
 
 ![waka](./metrics.plugin.wakatime.svg)
 
