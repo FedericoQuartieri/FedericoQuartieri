@@ -2,14 +2,14 @@ name: Generate Individual Metrics
 
 on:
   schedule:
-    - cron: "0 0 * * *"      # ogni giorno, mezzanotte UTC
-  workflow_dispatch:         # avvio manuale
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
-# 
+
 env:
-  METRICS_TOKEN:  ${{ secrets.METRICS_TOKEN }}
+  METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
   WAKATIME_TOKEN: ${{ secrets.WAKATIME_TOKEN }}
 
 jobs:
@@ -25,105 +25,68 @@ jobs:
       # 1. Isometric commit calendar
       ##################################################
       - name: Commit calendar
-        uses: lowlighter/metrics@v3.34
+        uses: gh-metrics/metrics@master
         with:
-          token:      ${{ env.METRICS_TOKEN }}
-          user:       FedericoQuartieri
-          base:       ""                         # niente header/attività
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          base: ""
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
-          filename:   metrics-calendar.svg
-
+          filename: metrics-calendar.svg
 
       ##################################################
       # 2. Starred topics
       ##################################################
-      # - name: Icons
-      #   uses: lowlighter/metrics@latest
-      #   with:
-      #     filename: metrics.plugin.topics.icons.svg
-      #     token: NOT_NEEDED
-      #     base: ""
-      #     plugin_topics: yes
-      #     plugin_topics_limit: 15
-      #     plugin_topics_mode: icons
-
-      - name: Starred topics (icons)
+      - name: Starred topics
         uses: gh-metrics/metrics@master
         with:
-          filename: metrics.plugin.topics.icons.svg
-          token: ${{ secrets.METRICS_TOKEN }}
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
           base: ""
           plugin_topics: yes
           plugin_topics_limit: 15
           plugin_topics_mode: labels
-          plugins_errors_fatal: yes
-          debug: yes
-
-
+          filename: metrics.plugin.topics.icons.svg
 
       ##################################################
       # 3. WakaTime
       ##################################################
       - name: WakaTime
-        uses: lowlighter/metrics@latest
+        uses: gh-metrics/metrics@master
         with:
-          filename: metrics.plugin.wakatime.svg
-          token: NOT_NEEDED
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
           base: ""
           plugin_wakatime: yes
           plugin_wakatime_sections: time, projects, projects-graphs, languages, languages-graphs, editors, os
-          plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}
-
+          plugin_wakatime_token: ${{ env.WAKATIME_TOKEN }}
+          filename: metrics.plugin.wakatime.svg
 
       ##################################################
       # 4. Languages activity
       ##################################################
-
       - name: Indepth analysis
-        uses: lowlighter/metrics@latest
+        uses: gh-metrics/metrics@master
         with:
-          filename: metrics.plugin.languages.indepth.svg
-          token: ${{ secrets.METRICS_TOKEN }}
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
           base: ""
           plugin_languages: yes
           plugin_languages_indepth: yes
           plugin_languages_details: lines, bytes-size
           plugin_languages_ignored: >-
-              PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
+            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
           plugin_languages_limit: 6
           plugin_languages_analysis_timeout: 40
+          filename: metrics.plugin.languages.indepth.svg
 
-         
       ##################################################
-      # 5. Coding habits and activity 2
-      ################################################## 
-
-      # - name: Recent activity charts
-      #   uses: lowlighter/metrics@latest
-      #   with:
-      #     filename: metrics.plugin.habits.charts.svg
-      #     token: ${{ secrets.METRICS_TOKEN }}
-      #     base: ""
-      #     plugin_habits: yes
-      #     plugin_habits_facts: no
-      #     plugin_habits_charts: yes
-      #     config_timezone: Europe/Paris
-
-
-
-      # - name: Recent activity charts
-      #   uses: gh-metrics/metrics@master
-      #   with:
-      #     filename: metrics.plugin.habits.charts.svg
-      #     token: ${{ secrets.METRICS_TOKEN }}
-      #     base: ""
-      #     plugin_habits: yes
-      #     plugin_habits_facts: no
-      #     plugin_habits_charts: yes
-      #     config_timezone: Europe/Paris
-
-
+      # 5. Coding habits and activity
+      ##################################################
       - name: Recent activity charts
         uses: dkhokhlov/metrics@master
         with:
@@ -132,16 +95,17 @@ jobs:
           plugins_errors_fatal: yes
           debug: yes
           debug_print: yes
-          filename: metrics.plugin.habits.charts.svg
-          token: ${{ secrets.METRICS_TOKEN }}
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
           base: ""
           plugin_habits: yes
           plugin_habits_facts: no
           plugin_habits_charts: yes
-          config_timezone: Europe/ParisEurope/Paris
+          config_timezone: Europe/Paris
+          filename: metrics.plugin.habits.charts.svg
 
       ##################################################
-      # Commit & push tutti gli SVG creati
+      # Commit & push di tutti gli SVG creati
       ##################################################
       - name: Commit and push SVGs
         uses: stefanzweifel/git-auto-commit-action@v5
