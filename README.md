@@ -43,8 +43,6 @@
 Here's an overview of my most used programming languages in repositories:
 
 ![Languages](./metrics.plugin.languages.indepth.svg)
-![Languages](./metrics.plugin.languages.indepth2.svg)
-![Languages](./metrics.plugin.languages.indepth3.svg)
 
 
 
@@ -65,7 +63,7 @@ Visual overview of my coding contributions this year:
 
 
 
-![star](./metrics.plugin.topics.svg)
+<!-- ! ![star](./metrics.plugin.topics.svg) -->
 
 
 ---
