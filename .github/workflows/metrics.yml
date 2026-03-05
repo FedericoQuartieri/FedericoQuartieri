@@ -21,6 +21,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      ##################################################
+      # 1. Isometric commit calendar
+      ##################################################
       - name: Commit calendar
         uses: gh-metrics/metrics@master
         with:
@@ -32,6 +35,9 @@ jobs:
           plugin_isocalendar_duration: full-year
           filename: metrics-calendar.svg
 
+      ##################################################
+      # 2. Starred topics
+      ##################################################
       - name: Starred topics
         uses: gh-metrics/metrics@master
         with:
@@ -44,6 +50,9 @@ jobs:
           plugin_topics_mode: labels
           filename: metrics.plugin.topics.svg
 
+      ##################################################
+      # 3. WakaTime
+      ##################################################
       - name: WakaTime
         uses: gh-metrics/metrics@master
         with:
@@ -56,6 +65,9 @@ jobs:
           plugin_wakatime_token: ${{ env.WAKATIME_TOKEN }}
           filename: metrics.plugin.wakatime.svg
 
+      ##################################################
+      # 4. Languages activity (indepth)
+      ##################################################
       - name: Languages indepth
         uses: gh-metrics/metrics@master
         with:
@@ -74,11 +86,17 @@ jobs:
           commits_authoring: user
           filename: metrics.plugin.languages.indepth.svg
 
+      ##################################################
+      # 5. Coding habits and activity
+      ##################################################
       - name: Recent activity charts
         uses: dkhokhlov/metrics@master
         with:
           output_action: none
           use_prebuilt_image: no
+          plugins_errors_fatal: yes
+          debug: yes
+          debug_print: yes
           token: ${{ env.METRICS_TOKEN }}
           user: FedericoQuartieri
           base: ""
@@ -88,15 +106,21 @@ jobs:
           config_timezone: Europe/Paris
           filename: metrics.plugin.habits.charts.svg
 
+      ##################################################
+      # Copy all rendered SVGs into the repo
+      ##################################################
       - name: Copy renders to repo
         run: |
-          cp -f /metrics_renders/metrics-calendar.svg ./metrics-calendar.svg || true
-          cp -f /metrics_renders/metrics.plugin.topics.svg ./metrics.plugin.topics.svg || true
-          cp -f /metrics_renders/metrics.plugin.wakatime.svg ./metrics.plugin.wakatime.svg || true
-          cp -f /metrics_renders/metrics.plugin.languages.indepth.svg ./metrics.plugin.languages.indepth.svg || true
-          cp -f /metrics_renders/metrics.plugin.habits.charts.svg ./metrics.plugin.habits.charts.svg || true
-          ls -la
+          ls -la /metrics_renders
+          for f in /metrics_renders/metrics*.svg; do
+            [ -f "$f" ] && cp -f "$f" "./$(basename "$f")"
+          done
+          ls -la metrics*.svg
+          git status --porcelain
 
+      ##################################################
+      # Commit & push all SVGs
+      ##################################################
       - name: Commit and push SVGs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
