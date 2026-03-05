@@ -43,6 +43,8 @@
 Here's an overview of my most used programming languages in repositories:
 
 ![Languages](./metrics.plugin.languages.indepth.svg)
+![Languages](./metrics.plugin.languages.indepth2.svg)
+![Languages](./metrics.plugin.languages.indepth3.svg)
 
 
 
