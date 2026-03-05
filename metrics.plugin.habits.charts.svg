@@ -107,8 +107,8 @@
 <rect x="320" y="88" width="15" height="15" fill="rgb(154,154,154)"/>
 <rect x="336" y="88" width="15" height="15" fill="rgb(183,183,183)"/>
 <rect x="352" y="88" width="15" height="15" fill="rgb(183,183,183)"/>
-<rect x="368" y="88" width="15" height="15" fill="rgb(183,183,183)"/>
-<rect x="384" y="88" width="15" height="15" fill="rgb(240,240,240)"/>
+<rect x="368" y="88" width="15" height="15" fill="rgb(154,154,154)"/>
+<rect x="384" y="88" width="15" height="15" fill="rgb(211,211,211)"/>
 <rect x="400" y="88" width="15" height="15" fill="rgb(240,240,240)"/>
 <rect x="416" y="88" width="15" height="15" fill="rgb(240,240,240)"/>
 <rect x="432" y="88" width="15" height="15" fill="rgb(240,240,240)"/>
@@ -185,5 +185,5 @@
 <rect x="416" y="136" width="15" height="15" fill="rgb(240,240,240)"/>
 <rect x="432" y="136" width="15" height="15" fill="rgb(240,240,240)"/>
 <rect x="448" y="136" width="15" height="15" fill="rgb(240,240,240)"/>
-<text x="80" y="180" font-family="Arial, sans-serif" font-size="12" fill="#333">Total commits counted: 33</text>
+<text x="80" y="180" font-family="Arial, sans-serif" font-size="12" fill="#333">Total commits counted: 35</text>
 </svg>
