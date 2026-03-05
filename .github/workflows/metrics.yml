@@ -223,6 +223,54 @@ jobs:
               f.write(out)
           PY
 
+
+      ###################################################
+      # 6 another language graph
+      ###################################################
+
+
+      - name: Languages indepth (with repo breakdown)
+        uses: gh-metrics/metrics@master
+        with:
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          base: ""
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_indepth_custom: yes
+          plugin_languages_sections: most-used, recently-used, recently-used-by-repo
+          plugin_languages_details: lines, bytes-size
+          plugin_languages_limit: 30
+          plugin_languages_analysis_timeout: 180
+          filename: metrics.plugin.languages.indepth2.svg
+
+
+      ###################################################
+      # 7 another another language graph
+      ###################################################
+
+
+      - name: Languages indepth
+        uses: gh-metrics/metrics@master
+        with:
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          base: ""
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_sections: most-used
+          plugin_languages_skipped: >- 
+            **/build/**, **/thirdParty/**, **/third_party/**, **/external/**, **/vendor/**, **/deps/**
+          plugin_languages_details: lines, bytes-size
+          plugin_languages_ignored: >-
+            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
+          plugin_languages_limit: 6
+          plugin_languages_analysis_timeout: 120
+          commits_authoring: user
+          filename: metrics.plugin.languages.indepth3.svg
+
       ##################################################
       # Copy metrics renders from /metrics_renders (others)
       ##################################################
