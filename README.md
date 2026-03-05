@@ -63,7 +63,7 @@ Visual overview of my coding contributions this year:
 
 
 
-![star](./metrics.plugin.topics.icons.svg)
+![star](./metrics.plugin.topics.svg)
 
 
 ---
