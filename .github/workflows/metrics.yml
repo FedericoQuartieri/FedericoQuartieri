@@ -21,9 +21,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      ##################################################
-      # 1. Isometric commit calendar
-      ##################################################
       - name: Commit calendar
         uses: gh-metrics/metrics@master
         with:
@@ -35,9 +32,6 @@ jobs:
           plugin_isocalendar_duration: full-year
           filename: metrics-calendar.svg
 
-      ##################################################
-      # 2. Starred topics
-      ##################################################
       - name: Starred topics
         uses: gh-metrics/metrics@master
         with:
@@ -50,9 +44,6 @@ jobs:
           plugin_topics_mode: labels
           filename: metrics.plugin.topics.svg
 
-      ##################################################
-      # 3. WakaTime
-      ##################################################
       - name: WakaTime
         uses: gh-metrics/metrics@master
         with:
@@ -65,9 +56,6 @@ jobs:
           plugin_wakatime_token: ${{ env.WAKATIME_TOKEN }}
           filename: metrics.plugin.wakatime.svg
 
-      ##################################################
-      # 4. Languages activity (indepth)
-      ##################################################
       - name: Languages indepth
         uses: gh-metrics/metrics@master
         with:
@@ -87,40 +75,62 @@ jobs:
           filename: metrics.plugin.languages.indepth.svg
 
       ##################################################
-      # 5. Coding habits and activity
+      # Habits (try charts)
       ##################################################
-      - name: Recent activity charts
+      - name: Habits charts (try)
+        id: habits_charts
         uses: dkhokhlov/metrics@master
+        continue-on-error: true
         with:
           output_action: none
           use_prebuilt_image: no
-          plugins_errors_fatal: yes
-          debug: yes
-          debug_print: yes
           token: ${{ env.METRICS_TOKEN }}
           user: FedericoQuartieri
           base: ""
           plugin_habits: yes
+          plugin_habits_from: 100
+          plugin_habits_days: 30
+          plugin_habits_trim: yes
           plugin_habits_facts: no
           plugin_habits_charts: yes
           config_timezone: Europe/Paris
           filename: metrics.plugin.habits.charts.svg
 
       ##################################################
-      # Copy all rendered SVGs into the repo
+      # Habits fallback (facts only) if charts failed
       ##################################################
-      - name: Copy renders to repo
-        run: |
-          ls -la /metrics_renders
-          for f in /metrics_renders/metrics*.svg; do
-            [ -f "$f" ] && cp -f "$f" "./$(basename "$f")"
-          done
-          ls -la metrics*.svg
-          git status --porcelain
+      - name: Habits fallback (facts only)
+        if: steps.habits_charts.outcome == 'failure'
+        uses: gh-metrics/metrics@master
+        with:
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          base: ""
+          plugin_habits: yes
+          plugin_habits_from: 100
+          plugin_habits_days: 30
+          plugin_habits_trim: yes
+          plugin_habits_facts: yes
+          plugin_habits_charts: no
+          config_timezone: Europe/Paris
+          filename: metrics.plugin.habits.charts.svg
 
       ##################################################
-      # Commit & push all SVGs
+      # Copy renders to repo + commit
       ##################################################
+      - name: Copy renders to repo
+        shell: bash
+        run: |
+          for d in /metrics_renders ./metrics_renders ./.metrics_renders; do
+            if [ -d "$d" ]; then
+              for f in "$d"/metrics*.svg; do
+                [ -f "$f" ] && cp -f "$f" "./$(basename "$f")"
+              done
+            fi
+          done
+          git status --porcelain
+
       - name: Commit and push SVGs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
