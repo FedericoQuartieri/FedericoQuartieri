@@ -87,7 +87,7 @@ jobs:
           filename: metrics.plugin.languages.indepth.svg
 
       ##################################################
-      # 5. Habits charts (custom, stable)
+      # 5. Habits charts (custom, stable, this works)
       ##################################################
       - name: Setup Python
         uses: actions/setup-python@v5
