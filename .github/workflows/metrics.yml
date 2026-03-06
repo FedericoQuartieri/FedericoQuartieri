@@ -84,7 +84,7 @@ jobs:
           plugin_languages_sections: most-used
           plugin_languages_details: lines, bytes-size
           plugin_languages_ignored: >-
-            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook
+            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook, EJS
           plugin_languages_limit: 6
           plugin_languages_analysis_timeout: 60
           commits_authoring: user
@@ -94,8 +94,34 @@ jobs:
 
           filename: metrics.plugin.languages.indepth.svg
 
+
+      ###################################################
+      # 5 language graph without PDE_EXAM
+      ###################################################
+
+
+      - name: Languages indepth
+        uses: gh-metrics/metrics@master
+        with:
+          output_action: none
+          token: ${{ env.METRICS_TOKEN }}
+          user: FedericoQuartieri
+          base: ""
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_sections: most-used
+          repositories_skipped: |
+            FedericoQuartieri/PDE_Exam          plugin_languages_details: lines, bytes-size
+          plugin_languages_ignored: >-
+            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook, EJS
+          plugin_languages_limit: 6
+          plugin_languages_analysis_timeout: 120
+          commits_authoring: user
+          filename: metrics.plugin.languages.indepth2.svg
+
+
       ##################################################
-      # 5. Habits charts (custom, stable, this works)
+      # 6. Habits charts (custom, stable, this works)
       ##################################################
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -288,47 +314,36 @@ jobs:
           with open("metrics.plugin.habits.charts.svg", "w", encoding="utf-8") as f:
               f.write("\n".join(svg))
           PY
-      ###################################################
-      # 6 language graph without PDE_EXAM
-      ###################################################
-
-
-      - name: Languages indepth
-        uses: gh-metrics/metrics@master
-        with:
-          output_action: none
-          token: ${{ env.METRICS_TOKEN }}
-          user: FedericoQuartieri
-          base: ""
-          plugin_languages: yes
-          plugin_languages_indepth: yes
-          plugin_languages_sections: most-used
-          repositories_skipped: |
-            FedericoQuartieri/PDE_Exam          plugin_languages_details: lines, bytes-size
-          plugin_languages_ignored: >-
-            PostScript, Fortran, Makefile, Shell, TeX, Roff Manpage, Jupyter Notebook, EJS
-          plugin_languages_limit: 6
-          plugin_languages_analysis_timeout: 120
-          commits_authoring: user
-          filename: metrics.plugin.languages.indepth2.svg
-
+     
 
       ###################################################
       # 7 Generate C++ breakdown by repo (SVG)
       ###################################################
 
-      - name: Generate C++ breakdown by repo (SVG)
+      - name: Generate C++ edited breakdown by repo (SVG)
         env:
           GH_TOKEN: ${{ env.METRICS_TOKEN }}
+          GH_USER: FedericoQuartieri
+          BYREPO_SINCE_DAYS: "120"
+          BYREPO_REPOS_LIMIT: "25"
+          BYREPO_COMMITS_PER_REPO: "15"
+          BYREPO_TOTAL_COMMITS_CAP: "200"
         run: |
           python -m pip install --upgrade pip
           python -m pip install requests
           python - <<'PY'
           import os
+          import time
+          import datetime as dt
           import requests
 
           TOKEN = os.environ["GH_TOKEN"]
-          USER = "FedericoQuartieri"
+          USER = os.environ["GH_USER"]
+
+          SINCE_DAYS = int(os.environ.get("BYREPO_SINCE_DAYS", "120"))
+          REPOS_LIMIT = int(os.environ.get("BYREPO_REPOS_LIMIT", "25"))
+          COMMITS_PER_REPO = int(os.environ.get("BYREPO_COMMITS_PER_REPO", "15"))
+          TOTAL_COMMITS_CAP = int(os.environ.get("BYREPO_TOTAL_COMMITS_CAP", "200"))
 
           headers = {
               "Authorization": f"Bearer {TOKEN}",
@@ -336,86 +351,160 @@ jobs:
               "X-GitHub-Api-Version": "2022-11-28",
           }
 
-          def paged(url, params=None):
+          session = requests.Session()
+          session.headers.update(headers)
+
+          since = (dt.datetime.utcnow() - dt.timedelta(days=SINCE_DAYS)).replace(microsecond=0).isoformat() + "Z"
+
+          def get_json(url, params=None, retries=4):
+              backoff = 1.0
+              for attempt in range(retries + 1):
+                  r = session.get(url, params=params, timeout=30)
+                  if r.status_code in (502, 503, 504):
+                      if attempt == retries:
+                          r.raise_for_status()
+                      time.sleep(backoff)
+                      backoff *= 2
+                      continue
+                  r.raise_for_status()
+                  return r.json()
+              raise RuntimeError("unreachable")
+
+          def paged(url, params=None, max_pages=3):
               out = []
-              page = 1
-              while True:
+              for page in range(1, max_pages + 1):
                   p = dict(params or {})
                   p["per_page"] = 100
                   p["page"] = page
-                  r = requests.get(url, headers=headers, params=p, timeout=30)
-                  r.raise_for_status()
-                  data = r.json()
+                  data = get_json(url, params=p)
                   if not data:
                       break
                   out.extend(data)
                   if len(data) < 100:
                       break
-                  page += 1
               return out
 
-          # List your repos (owned)
-          repos = paged("https://api.github.com/user/repos", params={"type": "owner", "sort": "updated"})
-          repos = [r for r in repos if not r.get("fork", False)]
+          def is_cpp_file(path: str) -> bool:
+              p = path.lower()
+              exts = (".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx", ".h")
+              return p.endswith(exts)
 
-          rows = []
+          def fmt_edits(n: int) -> str:
+              if n >= 1_000_000:
+                  return f"{n/1_000_000:.2f}M"
+              if n >= 1_000:
+                  return f"{n/1_000:.1f}k"
+              return str(n)
+
+          repos = paged("https://api.github.com/user/repos", params={"type": "owner", "sort": "pushed"}, max_pages=2)
+          repos = [r for r in repos if not r.get("fork", False)]
+          repos = repos[:REPOS_LIMIT]
+
+          per_repo = {}
+          total_commits_used = 0
+
           for r in repos:
+              if total_commits_used >= TOTAL_COMMITS_CAP:
+                  break
+
               owner = r["owner"]["login"]
               name = r["name"]
-              lr = requests.get(
-                  f"https://api.github.com/repos/{owner}/{name}/languages",
-                  headers=headers,
-                  timeout=30,
-              )
-              if lr.status_code != 200:
+              repo_full = f"{owner}/{name}"
+
+              try:
+                  commits = paged(
+                      f"https://api.github.com/repos/{owner}/{name}/commits",
+                      params={"author": USER, "since": since},
+                      max_pages=2,
+                  )
+              except Exception:
                   continue
-              langs = lr.json() or {}
-              cxx = int(langs.get("C++", 0))
-              total = sum(int(v) for v in langs.values())
-              if cxx > 0:
-                  rows.append((f"{owner}/{name}", cxx, total))
 
-          rows.sort(key=lambda x: x[1], reverse=True)
+              commits = commits[:COMMITS_PER_REPO]
+
+              cxx_edits = 0
+              total_edits = 0
+              used_here = 0
+
+              for c in commits:
+                  if total_commits_used >= TOTAL_COMMITS_CAP:
+                      break
+                  sha = c.get("sha")
+                  if not sha:
+                      continue
+
+                  try:
+                      detail = get_json(f"https://api.github.com/repos/{owner}/{name}/commits/{sha}")
+                  except Exception:
+                      continue
+
+                  files = detail.get("files") or []
+                  if not files:
+                      continue
+
+                  for f in files:
+                      fn = f.get("filename") or ""
+                      adds = int(f.get("additions") or 0)
+                      dels = int(f.get("deletions") or 0)
+                      edits = adds + dels
+                      total_edits += edits
+                      if is_cpp_file(fn):
+                          cxx_edits += edits
+
+                  used_here += 1
+                  total_commits_used += 1
+
+              if used_here > 0 and (cxx_edits > 0 or total_edits > 0):
+                  per_repo[repo_full] = {
+                      "cxx_edits": cxx_edits,
+                      "total_edits": total_edits,
+                      "commits_used": used_here,
+                  }
+
+          rows = sorted(per_repo.items(), key=lambda kv: kv[1]["cxx_edits"], reverse=True)
           top = rows[:12]
-          total_cxx = sum(x[1] for x in rows)
+          max_cxx = max([v["cxx_edits"] for _, v in top], default=1)
+          sum_cxx = sum(v["cxx_edits"] for _, v in rows)
 
-          def fmt_bytes(n):
-              if n >= 1024 * 1024:
-                  return f"{n/(1024*1024):.2f} MB"
-              if n >= 1024:
-                  return f"{n/1024:.1f} KB"
-              return f"{n} B"
-
-          width = 900
-          row_h = 26
+          W = 980
           pad = 24
-          title_h = 60
-          height = title_h + pad + len(top) * row_h + 40
+          title_h = 70
+          row_h = 26
+          bar_x = 470
+          bar_w = 360
+          H = title_h + pad + len(top) * row_h + 40
 
-          max_cxx = max([x[1] for x in top], default=1)
-          bar_w = 320
+          title_blue = "#0969da"
+          text_grey = "#57606a"
+          bar_grey = "rgb(80,80,80)"
+
+          def esc(s):
+              return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                       .replace('"', "&quot;").replace("'", "&#39;"))
 
           svg = []
-          svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">')
+          svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">')
           svg.append('<rect width="100%" height="100%" fill="white"/>')
-          svg.append(f'<text x="{pad}" y="28" font-family="Arial, sans-serif" font-size="18">C++ contribution by repository</text>')
-          svg.append(f'<text x="{pad}" y="48" font-family="Arial, sans-serif" font-size="12" fill="#555">Based on GitHub /languages (bytes). Total C++ across repos: {fmt_bytes(total_cxx)}</text>')
+          svg.append(f'<text x="{pad}" y="30" font-family="Arial, sans-serif" font-size="18" fill="{title_blue}">C++ edited impact by repository</text>')
+          svg.append(f'<text x="{pad}" y="50" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">Edits = additions + deletions from commit file stats · Window: last {SINCE_DAYS} days · Commits sampled: {total_commits_used} · Total C++ edits: {fmt_edits(sum_cxx)}</text>')
 
           y0 = title_h
-          for i, (repo, cxx, total) in enumerate(top):
+          for i, (repo, v) in enumerate(top):
               y = y0 + i * row_h
-              share = 0.0 if total == 0 else (cxx / total) * 100.0
+              cxx = int(v["cxx_edits"])
+              tot = int(v["total_edits"]) if int(v["total_edits"]) > 0 else 1
+              pct = 100.0 * cxx / tot
               bw = int(bar_w * (cxx / max_cxx)) if max_cxx > 0 else 0
-              svg.append(f'<text x="{pad}" y="{y+18}" font-family="Arial, sans-serif" font-size="12" fill="#111">{repo}</text>')
-              svg.append(f'<rect x="430" y="{y+6}" width="{bw}" height="14" fill="rgb(80,80,80)"/>')
-              svg.append(f'<text x="760" y="{y+18}" font-family="Arial, sans-serif" font-size="12" fill="#111">{fmt_bytes(cxx)} ({share:.1f}%)</text>')
 
-          svg.append('</svg>')
+              svg.append(f'<text x="{pad}" y="{y+18}" font-family="Arial, sans-serif" font-size="12" fill="#111">{esc(repo)}</text>')
+              svg.append(f'<rect x="{bar_x}" y="{y+6}" width="{bw}" height="14" rx="7" fill="{bar_grey}"/>')
+              svg.append(f'<text x="{bar_x+bar_w+12}" y="{y+18}" font-family="Arial, sans-serif" font-size="12" fill="#111">{fmt_edits(cxx)} edits ({pct:.1f}%)</text>')
+
+          svg.append("</svg>")
 
           with open("metrics.plugin.languages.byrepo.svg", "w", encoding="utf-8") as f:
               f.write("\n".join(svg))
           PY
-  
 
       ##################################################
       # Copy metrics renders from /metrics_renders (others)
