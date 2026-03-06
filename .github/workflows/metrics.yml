@@ -98,17 +98,23 @@ jobs:
         env:
           GH_TOKEN: ${{ env.METRICS_TOKEN }}
           GH_USER: FedericoQuartieri
+          HABITS_TZ: Europe/Paris
+          HABITS_SINCE_DAYS: "90"
+          HABITS_MAX_COMMITS: "200"
         run: |
           python -m pip install --upgrade pip
           python -m pip install requests
           python - <<'PY'
           import os
-          import math
           import datetime as dt
+          from zoneinfo import ZoneInfo
           import requests
 
           TOKEN = os.environ["GH_TOKEN"]
           USER = os.environ["GH_USER"]
+          TZ_NAME = os.environ.get("HABITS_TZ", "Europe/Paris")
+          SINCE_DAYS = int(os.environ.get("HABITS_SINCE_DAYS", "90"))
+          MAX_COMMITS = int(os.environ.get("HABITS_MAX_COMMITS", "200"))
 
           headers = {
               "Authorization": f"Bearer {TOKEN}",
@@ -116,13 +122,13 @@ jobs:
               "X-GitHub-Api-Version": "2022-11-28",
           }
 
-          since_days = 30
-          since = (dt.datetime.utcnow() - dt.timedelta(days=since_days)).replace(microsecond=0).isoformat() + "Z"
+          tz = ZoneInfo(TZ_NAME)
+          since = (dt.datetime.utcnow() - dt.timedelta(days=SINCE_DAYS)).replace(microsecond=0).isoformat() + "Z"
 
-          def paged(url, params=None):
+          def paged(url, params=None, max_pages=10):
               out = []
               page = 1
-              while True:
+              while page <= max_pages:
                   p = dict(params or {})
                   p["per_page"] = 100
                   p["page"] = page
@@ -137,92 +143,140 @@ jobs:
                   page += 1
               return out
 
-          repos = paged("https://api.github.com/user/repos", params={"type": "owner", "sort": "pushed"})
+          repos = paged("https://api.github.com/user/repos", params={"type": "owner", "sort": "pushed"}, max_pages=2)
           repos = [r for r in repos if not r.get("fork", False)]
 
-          # Keep it sane: only repos pushed recently (last 90 days) and cap to 60 repos
-          cutoff = dt.datetime.utcnow() - dt.timedelta(days=90)
-          def parse_iso(x):
-              try:
-                  return dt.datetime.fromisoformat(x.replace("Z", "+00:00")).replace(tzinfo=None)
-              except Exception:
-                  return None
-
-          filtered = []
-          for r in repos:
-              pushed = parse_iso(r.get("pushed_at", "") or "")
-              if pushed and pushed >= cutoff:
-                  filtered.append(r)
-          repos = filtered[:60]
-
-          grid = [[0 for _ in range(24)] for __ in range(7)]  # 0=Mon ... 6=Sun
+          times = []
+          HARD_CAP = 800
 
           for r in repos:
+              if len(times) >= HARD_CAP:
+                  break
               owner = r["owner"]["login"]
               name = r["name"]
+
               commits = paged(
                   f"https://api.github.com/repos/{owner}/{name}/commits",
                   params={"author": USER, "since": since},
+                  max_pages=2,
               )
+
               for c in commits:
-                  date_s = (c.get("commit") or {}).get("author", {}).get("date")
-                  if not date_s:
+                  cd = (c.get("commit") or {})
+                  d = (cd.get("committer") or {}).get("date") or (cd.get("author") or {}).get("date")
+                  if not d:
                       continue
-                  d = dt.datetime.fromisoformat(date_s.replace("Z", "+00:00"))
-                  weekday = d.weekday()
-                  hour = d.hour
-                  if 0 <= weekday <= 6 and 0 <= hour <= 23:
-                      grid[weekday][hour] += 1
+                  try:
+                      t = dt.datetime.fromisoformat(d.replace("Z", "+00:00")).astimezone(tz)
+                      times.append(t)
+                  except Exception:
+                      pass
 
-          maxv = max((max(row) for row in grid), default=0)
+          times.sort(reverse=True)
+          used = times[: min(MAX_COMMITS, len(times))]
+          n_used = len(used)
 
-          def shade(v):
-              if maxv == 0:
-                  t = 0.0
-              else:
-                  t = v / maxv
-              # grayscale 240 (light) -> 40 (dark)
-              g = int(round(240 - t * 200))
-              return f"rgb({g},{g},{g})"
+          hour_counts = [0] * 24
+          dow_counts = [0] * 7
+          # order: Sun..Sat (to match screenshot)
+          def dow_sun0(t):
+              # python: Mon=0..Sun=6 -> Sun=0..Sat=6
+              return (t.weekday() + 1) % 7
 
-          cell = 16
-          pad_l = 80
-          pad_t = 40
-          w = pad_l + 24 * cell + 20
-          h = pad_t + 7 * cell + 40
+          for t in used:
+              hour_counts[t.hour] += 1
+              dow_counts[dow_sun0(t)] += 1
 
-          days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          max_hour = max(hour_counts) if hour_counts else 0
+          max_dow = max(dow_counts) if dow_counts else 0
+
+          # ---- SVG layout ----
+          W = 980
+          H = 360
+          pad_l = 46
+          pad_r = 30
+          chart_w = W - pad_l - pad_r
+
+          title_blue = "#0969da"
+          text_grey = "#57606a"
+          dark_green = "#116329"
+          light_green = "#7ee2a8"
+
+          def esc(s):
+              return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                       .replace('"', "&quot;").replace("'", "&#39;"))
 
           svg = []
-          svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}">')
-          svg.append('<rect width="100%" height="100%" fill="white"/>')
-          svg.append(f'<text x="{pad_l}" y="24" font-family="Arial, sans-serif" font-size="16">Recent coding habits (last {since_days} days)</text>')
-          svg.append(f'<text x="{pad_l}" y="38" font-family="Arial, sans-serif" font-size="12" fill="#555">commits by weekday/hour (UTC)</text>')
+          svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">')
+
+          # Title
+          svg.append(f'<text x="{pad_l}" y="34" font-family="Arial, sans-serif" font-size="22" fill="{title_blue}">Recent coding habits</text>')
+          svg.append(f'<text x="{pad_l+250}" y="34" font-family="Arial, sans-serif" font-size="14" fill="{text_grey}">(computed from last {n_used} commits)</text>')
+
+          # Section titles
+          svg.append(f'<text x="{W/2}" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="{title_blue}">Commit activity per hour of day</text>')
+          svg.append(f'<text x="{W/2}" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="{title_blue}">Commit activity per day of week</text>')
+
+          # Hour chart
+          base_y1 = 150
+          max_h1 = 74
+          slot = chart_w / 24.0
+          bar_w = 14
+          dot_r = 6
+          dot_threshold = 2  # 1-2 -> dot, >=3 -> bar
+
+          for hr in range(24):
+              c = hour_counts[hr]
+              cx = pad_l + slot * hr + slot / 2
+
+              if c > 0:
+                  if c <= dot_threshold or max_hour == 0:
+                      svg.append(f'<circle cx="{cx:.2f}" cy="{base_y1}" r="{dot_r}" fill="{light_green}"/>')
+                      svg.append(f'<text x="{cx:.2f}" y="{base_y1-14}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{c}</text>')
+                  else:
+                      h = 6 if max_hour == 0 else int(round(max_h1 * (c / max_hour)))
+                      x = cx - bar_w / 2
+                      y = base_y1 - h
+                      svg.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bar_w}" height="{h}" rx="{bar_w/2}" fill="{dark_green}"/>')
+                      svg.append(f'<text x="{cx:.2f}" y="{y-8:.2f}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{c}</text>')
+
+              # hour labels
+              lbl = f"{hr:02d}"
+              svg.append(f'<text x="{cx:.2f}" y="{base_y1+30}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{lbl}</text>')
+
+          # Day chart
+          base_y2 = 300
+          max_h2 = 74
+          days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+          slot2 = chart_w / 7.0
+          bar_w2 = 18
+          dot_r2 = 7
 
           for i, dname in enumerate(days):
-              y = pad_t + i * cell + 12
-              svg.append(f'<text x="10" y="{y}" font-family="Arial, sans-serif" font-size="12" fill="#333">{dname}</text>')
+              c = dow_counts[i]
+              cx = pad_l + slot2 * i + slot2 / 2
 
-          for hr in range(0, 24, 3):
-              x = pad_l + hr * cell + 2
-              svg.append(f'<text x="{x}" y="{pad_t + 7*cell + 18}" font-family="Arial, sans-serif" font-size="10" fill="#333">{hr:02d}</text>')
+              if c > 0:
+                  if c <= dot_threshold or max_dow == 0:
+                      svg.append(f'<circle cx="{cx:.2f}" cy="{base_y2}" r="{dot_r2}" fill="{light_green}"/>')
+                      svg.append(f'<text x="{cx:.2f}" y="{base_y2-16}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{c}</text>')
+                  else:
+                      h = 6 if max_dow == 0 else int(round(max_h2 * (c / max_dow)))
+                      x = cx - bar_w2 / 2
+                      y = base_y2 - h
+                      svg.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bar_w2}" height="{h}" rx="{bar_w2/2}" fill="{dark_green}"/>')
+                      svg.append(f'<text x="{cx:.2f}" y="{y-8:.2f}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{c}</text>')
 
-          for d in range(7):
-              for hr in range(24):
-                  v = grid[d][hr]
-                  x = pad_l + hr * cell
-                  y = pad_t + d * cell
-                  svg.append(f'<rect x="{x}" y="{y}" width="{cell-1}" height="{cell-1}" fill="{shade(v)}"/>')
+              svg.append(f'<text x="{cx:.2f}" y="{base_y2+32}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">{esc(dname)}</text>')
 
-          total = sum(sum(r) for r in grid)
-          svg.append(f'<text x="{pad_l}" y="{h-12}" font-family="Arial, sans-serif" font-size="12" fill="#333">Total commits counted: {total}</text>')
-          svg.append('</svg>')
+          # Small footer (timezone)
+          svg.append(f'<text x="{pad_l}" y="{H-12}" font-family="Arial, sans-serif" font-size="12" fill="{text_grey}">Timezone: {esc(TZ_NAME)} · Window: last {SINCE_DAYS} days · Max commits used: {MAX_COMMITS}</text>')
 
-          out = "\n".join(svg)
+          svg.append("</svg>")
+
           with open("metrics.plugin.habits.charts.svg", "w", encoding="utf-8") as f:
-              f.write(out)
+              f.write("\n".join(svg))
           PY
-
 
       ###################################################
       # 6 language graph without PDE_EXAM
