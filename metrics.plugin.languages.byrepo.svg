@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="290" viewBox="0 0 980 290">
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="264" viewBox="0 0 980 264">
 <rect width="100%" height="100%" fill="white"/>
 <text x="24" y="30" font-family="Arial, sans-serif" font-size="18" fill="#0969da">C++ edited impact by repository</text>
-<text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Edits = additions + deletions from commit file stats · Window: last 120 days · Commits sampled: 50 · Total C++ edits: 0</text>
-<text x="24" y="88" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/FedericoQuartieri</text>
-<rect x="470" y="76" width="0" height="14" rx="7" fill="rgb(80,80,80)"/>
-<text x="842" y="88" font-family="Arial, sans-serif" font-size="12" fill="#111">0 edits (0.0%)</text>
-<text x="24" y="114" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/Aerospace-Module-2</text>
+<text x="24" y="50" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Edits = additions + deletions from commit file stats · Window: last 120 days · Commits sampled: 50 · Total C++ edits: 473</text>
+<text x="24" y="88" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/Aerospace-Module-2</text>
+<rect x="470" y="76" width="360" height="14" rx="7" fill="rgb(80,80,80)"/>
+<text x="842" y="88" font-family="Arial, sans-serif" font-size="12" fill="#111">473 edits (1.1%)</text>
+<text x="24" y="114" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/FedericoQuartieri</text>
 <rect x="470" y="102" width="0" height="14" rx="7" fill="rgb(80,80,80)"/>
 <text x="842" y="114" font-family="Arial, sans-serif" font-size="12" fill="#111">0 edits (0.0%)</text>
 <text x="24" y="140" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/ANN</text>
@@ -17,7 +17,4 @@
 <text x="24" y="192" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/cyclone-detection</text>
 <rect x="470" y="180" width="0" height="14" rx="7" fill="rgb(80,80,80)"/>
 <text x="842" y="192" font-family="Arial, sans-serif" font-size="12" fill="#111">0 edits (0.0%)</text>
-<text x="24" y="218" font-family="Arial, sans-serif" font-size="12" fill="#111">FedericoQuartieri/QiskitFallFest-Hackathon-2025</text>
-<rect x="470" y="206" width="0" height="14" rx="7" fill="rgb(80,80,80)"/>
-<text x="842" y="218" font-family="Arial, sans-serif" font-size="12" fill="#111">0 edits (0.0%)</text>
 </svg>
