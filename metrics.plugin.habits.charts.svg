@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="980" height="360" viewBox="0 0 980 360">
 <text x="46" y="34" font-family="Arial, sans-serif" font-size="22" fill="#0969da">Recent coding habits</text>
-<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 109 commits)</text>
+<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 111 commits)</text>
 <text x="490.0" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per hour of day</text>
 <text x="490.0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per day of week</text>
 <rect x="57.83" y="76.00" width="14" height="74" rx="7.0" fill="#116329"/>
@@ -8,8 +8,8 @@
 <text x="64.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">00</text>
 <text x="102.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">01</text>
 <text x="140.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">02</text>
-<rect x="170.83" y="145.00" width="14" height="5" rx="7.0" fill="#116329"/>
-<text x="177.83" y="137.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
+<rect x="170.83" y="144.00" width="14" height="6" rx="7.0" fill="#116329"/>
+<text x="177.83" y="136.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
 <text x="177.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">03</text>
 <text x="215.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">04</text>
 <text x="253.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">05</text>
@@ -33,8 +33,8 @@
 <rect x="622.83" y="146.00" width="14" height="4" rx="7.0" fill="#116329"/>
 <text x="629.83" y="138.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
 <text x="629.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">15</text>
-<rect x="660.50" y="139.00" width="14" height="11" rx="7.0" fill="#116329"/>
-<text x="667.50" y="131.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">9</text>
+<rect x="660.50" y="138.00" width="14" height="12" rx="7.0" fill="#116329"/>
+<text x="667.50" y="130.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">10</text>
 <text x="667.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">16</text>
 <rect x="698.17" y="145.00" width="14" height="5" rx="7.0" fill="#116329"/>
 <text x="705.17" y="137.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
@@ -63,8 +63,8 @@
 <circle cx="239.71" cy="300" r="7" fill="#7ee2a8"/>
 <text x="239.71" y="284" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
 <text x="239.71" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Mon</text>
-<circle cx="368.86" cy="300" r="7" fill="#7ee2a8"/>
-<text x="368.86" y="284" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">2</text>
+<rect x="359.86" y="296.00" width="18" height="4" rx="9.0" fill="#116329"/>
+<text x="368.86" y="288.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
 <text x="368.86" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Tue</text>
 <rect x="489.00" y="226.00" width="18" height="74" rx="9.0" fill="#116329"/>
 <text x="498.00" y="218.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">70</text>
