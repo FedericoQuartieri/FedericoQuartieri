@@ -61,22 +61,22 @@
                         <div class="chart-bars horizontal">
                             <div class="entry">
                                 <span class="name">Fault-Tolerant-Quantum-Compiler</span>
-                                <div class="bar" style="width: 42.464%; background-color: var(--color-calendar-graph-day-L3-bg)"></div>
-                                <span class="value">53%</span>
+                                <div class="bar" style="width: 44.895999999999994%; background-color: var(--color-calendar-graph-day-L3-bg)"></div>
+                                <span class="value">56%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">master-pdf-editor-5-9-82-unlocked-edition</span>
-                                <div class="bar" style="width: 25.415999999999997%; background-color: var(--color-calendar-graph-day-L2-bg)"></div>
-                                <span class="value">32%</span>
+                                <div class="bar" style="width: 22.928%; background-color: var(--color-calendar-graph-day-L2-bg)"></div>
+                                <span class="value">29%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">CESQ_Hackathon_Quantum_Error_Correction</span>
-                                <div class="bar" style="width: 8.815999999999999%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <div class="bar" style="width: 8.856%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
                                 <span class="value">11%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">qrunch_tutorials</span>
-                                <div class="bar" style="width: 3.2799999999999994%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <div class="bar" style="width: 3.2960000000000003%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
                                 <span class="value">4%</span>
                             </div>
                             <div class="entry">
@@ -91,12 +91,12 @@
                         <div class="chart-bars horizontal">
                             <div class="entry">
                                 <span class="name">Other</span>
-                                <div class="bar" style="width: 77.03999999999999%; background-color: var(--color-calendar-graph-day-L4-bg)"></div>
+                                <div class="bar" style="width: 77.024%; background-color: var(--color-calendar-graph-day-L4-bg)"></div>
                                 <span class="value">96%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">Python</span>
-                                <div class="bar" style="width: 2.9600000000000004%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <div class="bar" style="width: 2.9760000000000004%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
                                 <span class="value">4%</span>
                             </div>
                         </div>
