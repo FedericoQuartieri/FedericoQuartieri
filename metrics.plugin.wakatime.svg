@@ -61,18 +61,18 @@
                         <div class="chart-bars horizontal">
                             <div class="entry">
                                 <span class="name">Fault-Tolerant-Quantum-Compiler</span>
-                                <div class="bar" style="width: 57.855999999999995%; background-color: var(--color-calendar-graph-day-L3-bg)"></div>
-                                <span class="value">72%</span>
-                            </div>
-                            <div class="entry">
-                                <span class="name">ETH_Quantum_Hackathon_26</span>
-                                <div class="bar" style="width: 17.688%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
-                                <span class="value">22%</span>
+                                <div class="bar" style="width: 71.26400000000001%; background-color: var(--color-calendar-graph-day-L4-bg)"></div>
+                                <span class="value">89%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">GlobalProtect-openconnect</span>
-                                <div class="bar" style="width: 4.4559999999999995%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <div class="bar" style="width: 4.424%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
                                 <span class="value">6%</span>
+                            </div>
+                            <div class="entry">
+                                <span class="name">ETH_Quantum_Hackathon_26</span>
+                                <div class="bar" style="width: 4.311999999999999%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <span class="value">5%</span>
                             </div>
                         </div>
                     </section>
@@ -81,13 +81,13 @@
                         <div class="chart-bars horizontal">
                             <div class="entry">
                                 <span class="name">Other</span>
-                                <div class="bar" style="width: 79.024%; background-color: var(--color-calendar-graph-day-L4-bg)"></div>
-                                <span class="value">99%</span>
+                                <div class="bar" style="width: 78.072%; background-color: var(--color-calendar-graph-day-L4-bg)"></div>
+                                <span class="value">98%</span>
                             </div>
                             <div class="entry">
                                 <span class="name">Python</span>
-                                <div class="bar" style="width: 0.976%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
-                                <span class="value">1%</span>
+                                <div class="bar" style="width: 1.928%; background-color: var(--color-calendar-graph-day-L1-bg)"></div>
+                                <span class="value">2%</span>
                             </div>
                         </div>
                     </section>
