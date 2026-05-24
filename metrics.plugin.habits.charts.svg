@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="980" height="360" viewBox="0 0 980 360">
 <text x="46" y="34" font-family="Arial, sans-serif" font-size="22" fill="#0969da">Recent coding habits</text>
-<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 53 commits)</text>
+<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 54 commits)</text>
 <text x="490.0" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per hour of day</text>
 <text x="490.0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per day of week</text>
 <rect x="57.83" y="98.00" width="14" height="52" rx="7.0" fill="#116329"/>
@@ -42,8 +42,8 @@
 <rect x="735.83" y="128.00" width="14" height="22" rx="7.0" fill="#116329"/>
 <text x="742.83" y="120.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
 <text x="742.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">18</text>
-<rect x="773.50" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
-<text x="780.50" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
+<rect x="773.50" y="113.00" width="14" height="37" rx="7.0" fill="#116329"/>
+<text x="780.50" y="105.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
 <text x="780.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">19</text>
 <rect x="811.17" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
 <text x="818.17" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
@@ -74,7 +74,7 @@
 <text x="756.29" y="264.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
 <text x="756.29" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Fri</text>
 <circle cx="885.43" cy="300" r="7" fill="#7ee2a8"/>
-<text x="885.43" y="284" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
+<text x="885.43" y="284" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">2</text>
 <text x="885.43" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Sat</text>
 <text x="46" y="348" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Timezone: Europe/Paris · Window: last 90 days · Max commits used: 200</text>
 </svg>
