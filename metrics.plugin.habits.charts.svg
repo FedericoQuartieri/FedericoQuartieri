@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="980" height="360" viewBox="0 0 980 360">
 <text x="46" y="34" font-family="Arial, sans-serif" font-size="22" fill="#0969da">Recent coding habits</text>
-<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 65 commits)</text>
+<text x="296" y="34" font-family="Arial, sans-serif" font-size="14" fill="#57606a">(computed from last 70 commits)</text>
 <text x="490.0" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per hour of day</text>
 <text x="490.0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0969da">Commit activity per day of week</text>
-<rect x="57.83" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
-<text x="64.83" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
+<rect x="57.83" y="123.00" width="14" height="27" rx="7.0" fill="#116329"/>
+<text x="64.83" y="115.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
 <text x="64.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">00</text>
 <circle cx="102.50" cy="150" r="6" fill="#7ee2a8"/>
 <text x="102.50" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
@@ -18,41 +18,41 @@
 <circle cx="366.17" cy="150" r="6" fill="#7ee2a8"/>
 <text x="366.17" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
 <text x="366.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">08</text>
-<rect x="396.83" y="128.00" width="14" height="22" rx="7.0" fill="#116329"/>
-<text x="403.83" y="120.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
+<rect x="396.83" y="130.00" width="14" height="20" rx="7.0" fill="#116329"/>
+<text x="403.83" y="122.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
 <text x="403.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">09</text>
 <circle cx="441.50" cy="150" r="6" fill="#7ee2a8"/>
 <text x="441.50" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
 <text x="441.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">10</text>
-<rect x="472.17" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
-<text x="479.17" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
+<rect x="472.17" y="123.00" width="14" height="27" rx="7.0" fill="#116329"/>
+<text x="479.17" y="115.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
 <text x="479.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">11</text>
 <rect x="509.83" y="76.00" width="14" height="74" rx="7.0" fill="#116329"/>
-<text x="516.83" y="68.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">10</text>
+<text x="516.83" y="68.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">11</text>
 <text x="516.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">12</text>
-<rect x="547.50" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
-<text x="554.50" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
+<rect x="547.50" y="103.00" width="14" height="47" rx="7.0" fill="#116329"/>
+<text x="554.50" y="95.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">7</text>
 <text x="554.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">13</text>
-<rect x="585.17" y="113.00" width="14" height="37" rx="7.0" fill="#116329"/>
-<text x="592.17" y="105.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
+<rect x="585.17" y="116.00" width="14" height="34" rx="7.0" fill="#116329"/>
+<text x="592.17" y="108.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
 <text x="592.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">14</text>
-<rect x="622.83" y="128.00" width="14" height="22" rx="7.0" fill="#116329"/>
-<text x="629.83" y="120.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
+<rect x="622.83" y="130.00" width="14" height="20" rx="7.0" fill="#116329"/>
+<text x="629.83" y="122.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
 <text x="629.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">15</text>
-<rect x="660.50" y="91.00" width="14" height="59" rx="7.0" fill="#116329"/>
-<text x="667.50" y="83.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
+<rect x="660.50" y="96.00" width="14" height="54" rx="7.0" fill="#116329"/>
+<text x="667.50" y="88.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
 <text x="667.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">16</text>
-<rect x="698.17" y="113.00" width="14" height="37" rx="7.0" fill="#116329"/>
-<text x="705.17" y="105.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
+<rect x="698.17" y="116.00" width="14" height="34" rx="7.0" fill="#116329"/>
+<text x="705.17" y="108.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">5</text>
 <text x="705.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">17</text>
-<rect x="735.83" y="128.00" width="14" height="22" rx="7.0" fill="#116329"/>
-<text x="742.83" y="120.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
+<rect x="735.83" y="130.00" width="14" height="20" rx="7.0" fill="#116329"/>
+<text x="742.83" y="122.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
 <text x="742.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">18</text>
-<rect x="773.50" y="106.00" width="14" height="44" rx="7.0" fill="#116329"/>
-<text x="780.50" y="98.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">6</text>
+<rect x="773.50" y="110.00" width="14" height="40" rx="7.0" fill="#116329"/>
+<text x="780.50" y="102.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">6</text>
 <text x="780.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">19</text>
-<rect x="811.17" y="128.00" width="14" height="22" rx="7.0" fill="#116329"/>
-<text x="818.17" y="120.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
+<rect x="811.17" y="123.00" width="14" height="27" rx="7.0" fill="#116329"/>
+<text x="818.17" y="115.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">4</text>
 <text x="818.17" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">20</text>
 <circle cx="855.83" cy="150" r="6" fill="#7ee2a8"/>
 <text x="855.83" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
@@ -69,8 +69,8 @@
 <rect x="230.71" y="226.00" width="18" height="74" rx="9.0" fill="#116329"/>
 <text x="239.71" y="218.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">20</text>
 <text x="239.71" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Mon</text>
-<rect x="359.86" y="274.00" width="18" height="26" rx="9.0" fill="#116329"/>
-<text x="368.86" y="266.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">7</text>
+<rect x="359.86" y="256.00" width="18" height="44" rx="9.0" fill="#116329"/>
+<text x="368.86" y="248.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">12</text>
 <text x="368.86" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Tue</text>
 <rect x="489.00" y="263.00" width="18" height="37" rx="9.0" fill="#116329"/>
 <text x="498.00" y="255.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">10</text>
