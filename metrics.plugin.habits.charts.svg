@@ -48,8 +48,8 @@
 <rect x="735.83" y="120.00" width="14" height="30" rx="7.0" fill="#116329"/>
 <text x="742.83" y="112.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">6</text>
 <text x="742.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">18</text>
-<rect x="773.50" y="111.00" width="14" height="39" rx="7.0" fill="#116329"/>
-<text x="780.50" y="103.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
+<rect x="773.50" y="115.00" width="14" height="35" rx="7.0" fill="#116329"/>
+<text x="780.50" y="107.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">7</text>
 <text x="780.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">19</text>
 <rect x="811.17" y="111.00" width="14" height="39" rx="7.0" fill="#116329"/>
 <text x="818.17" y="103.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
@@ -58,7 +58,7 @@
 <text x="855.83" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">2</text>
 <text x="855.83" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">21</text>
 <circle cx="893.50" cy="150" r="6" fill="#7ee2a8"/>
-<text x="893.50" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">1</text>
+<text x="893.50" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">2</text>
 <text x="893.50" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">22</text>
 <rect x="924.17" y="135.00" width="14" height="15" rx="7.0" fill="#116329"/>
 <text x="931.17" y="127.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">3</text>
@@ -78,11 +78,11 @@
 <rect x="618.14" y="274.00" width="18" height="26" rx="9.0" fill="#116329"/>
 <text x="627.14" y="266.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">10</text>
 <text x="627.14" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Thu</text>
-<rect x="747.29" y="279.00" width="18" height="21" rx="9.0" fill="#116329"/>
-<text x="756.29" y="271.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">8</text>
+<rect x="747.29" y="276.00" width="18" height="24" rx="9.0" fill="#116329"/>
+<text x="756.29" y="268.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">9</text>
 <text x="756.29" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Fri</text>
-<rect x="876.43" y="252.00" width="18" height="48" rx="9.0" fill="#116329"/>
-<text x="885.43" y="244.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">18</text>
+<rect x="876.43" y="255.00" width="18" height="45" rx="9.0" fill="#116329"/>
+<text x="885.43" y="247.00" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">17</text>
 <text x="885.43" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Sat</text>
 <text x="46" y="348" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Timezone: Europe/Paris · Window: last 90 days · Max commits used: 200</text>
 </svg>
